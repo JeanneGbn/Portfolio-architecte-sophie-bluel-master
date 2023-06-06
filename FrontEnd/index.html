@@ -9,7 +9,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./test.js"></script>
+	<script src="https://kit.fontawesome.com/86c736b345.js" crossorigin="anonymous"></script>
+	<script src="./index.js"></script>
 </head>
 <body>
 <header>
@@ -18,11 +19,23 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a href="./login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
+<aside id="modale1" class="modale" aria-hidden="true" role="application" aria-labelledby="modale_title">
+	<div class="modale_wrapper">
+		<button class="x"> <i class="fa-solid fa-x"></i> </button>
+		<div id="modale_title"> Galerie photo </div>
+		<div class="all_pictures">  </div>
+		<div class="buttons">
+		<button class="add_picture"> Ajouter une photo  </button>
+		<button class="delete_all">  Supprimer galerie </button>
+		</div>
+	</div>
+
+</aside>
 <main>
 	<section id="introduction">
 		<figure>
@@ -36,7 +49,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="mes-projets"> 
+		<h2>Mes Projets</h2> 
+		<a href="#modale1" class="modifier"> modifier <i class="fa-regular fa-pen-to-square"></i> </a>
+		</div>
 		<div class="filters"> <button class="all"> Tous </button> </div>
 		<div class="gallery"></div>
 	</section>

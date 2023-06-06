@@ -122,10 +122,8 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
-}
+
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -199,7 +197,7 @@ footer nav ul {
 }
 
 .formulaire{
-	width: 30%;
+	width: 1O0%;
 	margin-top: 4%;
 }
 
@@ -224,6 +222,7 @@ footer nav ul {
 .connect input{
 	height: 36px;
 	border-style: none;
+	cursor: pointer;
 }
 .connect p{
 	border-bottom: solid 0.6px;
@@ -236,11 +235,15 @@ footer nav ul {
 	color: #1D6154;
 	font-size: 16px;
 	font-weight: 700;
-	border-width: 1.6px;
+	border-width: 1.4px;
 	border-color: #1D6154;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 18px;
+	padding-right: 18px;
 	background-color: #FFFEF8;
 	cursor: pointer;
+	margin-left: 2%;
 
 }
 
@@ -248,4 +251,102 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 6%;
+}
+
+.mes-projets {
+	display: flex;
+	flex-direction: row;
+	height: 80px;
+	position: relative;
+}
+.mes-projets h2 {
+	font-weight: 700;
+	font-size: 30px;
+	position: absolute;
+	left: 40%;
+	z-index: 0;
+}
+.modifier {
+	position: absolute;
+	left: 68%;
+	top: 12%;
+	font-size: 14px;
+	font-weight: 400;
+	text-decoration: none;
+	color: black;
+	display: none;
+}
+
+/* Partie modale */
+* { box-sizing: border-box;}
+.modale {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	display: none;
+}
+
+.modale_wrapper {
+	width: 45%;
+	height: 70%;
+	background-color: white;
+	padding: 20px;
+	position: relative;
+}
+
+aside .all_pictures {
+	overflow: auto;
+}
+
+aside .x {
+	text-decoration: none;
+	border-style: hidden;
+	background-color: white;
+	text-align: end;
+	width: 100%;
+}
+
+aside #modale_title {
+	width: 100%;
+	text-align: center;
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 5%;
+}
+
+.buttons {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	bottom: 5%;
+	left: 38%;
+}
+
+.add_picture {
+	font-size: 14px;
+	font-weight: 700;
+	padding-left: 35px;
+	padding-right: 35px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+	border-radius: 90px;
+	color: white;
+	background-color: #1D6154;
+	border-color: #1D6154;
+	border-width: 0px;
+}
+.delete_all {
+	font-size: 14px;
+	font-weight: 400;
+	border-style: none;
+	background-color: white;
+	color: #D65353;
 }

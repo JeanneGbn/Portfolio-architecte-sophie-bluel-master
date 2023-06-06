@@ -9,6 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	
 </head>
 <body>
 <header>
@@ -25,16 +26,18 @@
 <main>
     <section class="log-in">
         <h2> Log In </h2>
+		<form id="loginform">
         <div class="formulaire">
            <p> E-mail </p>
-             <input type="email">
+             <input class="email" type="email">
            <p> Mot de passe </p>
-             <input type="password"> 
+             <input class="password" type="password"> 
         </div>
         <div class="connect">
             <input type="submit" value="Envoyer">
             <p> Mot de passe oublié </p>
         </div>
+		</form>
     </section>
 </main>
 
@@ -45,5 +48,6 @@
 		</ul>
 	</nav>
 </footer>
+<script src="./login.js"></script>
 </body>
 </html>

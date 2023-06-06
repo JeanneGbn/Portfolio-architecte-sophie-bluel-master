@@ -36,7 +36,7 @@ async function getFilters() {
 async function init() {
     const projects = await getProjects();
 
-  /*for (let i = 0; i < projects.length; i++) {
+  for (let i = 0; i < projects.length; i++) {
 
         const sectionGallery = document.querySelector(".gallery")
         const baliseFigure = document.createElement("figure")
@@ -49,7 +49,7 @@ async function init() {
         baliseFigure.appendChild(figCaption)
         }
         
-    */
+    
      const filters = await getFilters(); 
          
      for (let i = 0; i < filters.length; i++) {
@@ -73,16 +73,18 @@ async function handleClickFilter(event){
    
     let projectsFiltersArray = []
     const projects = await getProjects();
+    const sectionGallery = document.querySelector(".gallery")
+    sectionGallery.innerHTML = ""
     switch(event.target.getAttribute("data-filterId")){
     case "1":
         for (let i = 0; i < projects.length; i++) 
         if(projects[i].category.id === 1)
         projectsFiltersArray.push(projects[i])
-
+       
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
 
-            const sectionGallery = document.querySelector(".gallery")
+            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -97,12 +99,13 @@ async function handleClickFilter(event){
     case "2":
         for (let i = 0; i < projects.length; i++)
         if(projects[i].category.id === 2)
+        
         projectsFiltersArray.push(projects[i]) 
 
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
 
-            const sectionGallery = document.querySelector(".gallery")
+            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -122,7 +125,7 @@ async function handleClickFilter(event){
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
 
-            const sectionGallery = document.querySelector(".gallery")
+            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -137,7 +140,7 @@ async function handleClickFilter(event){
     default: 
     for (let i = 0; i < projects.length; i++) {
 
-        const sectionGallery = document.querySelector(".gallery")
+        
         const baliseFigure = document.createElement("figure")
         const imageElement = document.createElement("img")
         imageElement.src = projects[i].imageUrl
@@ -150,17 +153,20 @@ async function handleClickFilter(event){
 
 }
 
-   
-
-    console.log(projectsFiltersArray)
 }
 
+// Partie Modales
+/* 
+const openModale = function (e){
+    e.preventDefault()
+    const target = document.querySelector(e.target.getAttribute('href'))
+    target.style.display = null
+    target.removeAttribute('aria-hidden')
+    
+}
+const buttonModifier = document.querySelector(".modifier")
+buttonModifier.addEventListener('click',openModale)
 
 
-
-/*
-
-imageElement.src = projects[i].imageUrl
-
+sophie.bluel@test.tld
 */
-
