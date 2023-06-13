@@ -1,9 +1,60 @@
+// Connection API
+
+function connection() {
+    return fetch("http://localhost:5678/api/users/login", {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "email": stockEmail,
+            "password": stockPassword,
+        })
+    })
+}
+
+
+// Récupérer email & MDP 
+
 const form = document.getElementById("loginform")
-const email = document.querySelector(".email")
-const password = document.querySelector(".password")
-form.addEventListener('submit', function(e){
-    console.log(password.value)
-    console.log(email.value)
+const email = document.querySelector('input[type="email"]')
+const password = document.querySelector('input[type="password"]')
+const login = document.querySelector('input[type="submit"]')
+let stockEmail = email.value
+let stockPassword = password.value
+
+
+// Event connection 
+
+login.addEventListener('click', (e) => {
     e.preventDefault()
+    stockEmail = email.value
+    stockPassword = password.value
+
+    connection()
+        .then((response) => response.json())
+        .then(login => {
+            if (login.token) {
+                localStorage.setItem('token', login.token)
+                isUserLogged = true
+                window.location.href = "./index.html"
+                console.log("connect")
+            } else {
+                console.error("email ou MDP incorrect")
+                
+            }
+        })
+        
+})
+
+
+// Récupérer données 
+
+email.addEventListener('input', (e) => {
+    console.log(e.target.value)
+
+})
+password.addEventListener('input', (e) => {
+    console.log(e.target.value)
 })
 

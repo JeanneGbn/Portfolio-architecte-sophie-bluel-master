@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/86c736b345.js" crossorigin="anonymous"></script>
-	<script src="./index.js"></script>
+	
 </head>
 <body>
 <header>
@@ -24,17 +24,11 @@
 		</ul>
 	</nav>
 </header>
-<aside id="modale1" class="modale" aria-hidden="true" role="application" aria-labelledby="modale_title">
-	<div class="modale_wrapper">
-		<button class="x"> <i class="fa-solid fa-x"></i> </button>
-		<div id="modale_title"> Galerie photo </div>
-		<div class="all_pictures">  </div>
-		<div class="buttons">
-		<button class="add_picture"> Ajouter une photo  </button>
-		<button class="delete_all">  Supprimer galerie </button>
-		</div>
-	</div>
-
+<aside id="modale1" class="modal hidden" >
+	<div class="modale_wrapper"> </div>
+</aside>
+<aside id="modale2" class="modal" style="display: none;">
+	<div class="modale_wrapper"> </div>
 </aside>
 <main>
 	<section id="introduction">
@@ -53,7 +47,7 @@
 		<h2>Mes Projets</h2> 
 		<a href="#modale1" class="modifier"> modifier <i class="fa-regular fa-pen-to-square"></i> </a>
 		</div>
-		<div class="filters"> <button class="all"> Tous </button> </div>
+		<div class="filters" style="display: none;"> <button class="all"> Tous </button> </div>
 		<div class="gallery"></div>
 	</section>
 	<section id="contact">
@@ -78,5 +72,6 @@
 		</ul>
 	</nav>
 </footer>
+<script src="./index.js"></script>
 </body>
 </html>

@@ -1,40 +1,31 @@
-//  const f = await fetch('http://localhost:5678/api/works')
 
-// Fonction lien json
+
+// Récupération API 
 
 async function getProjects() {
-    const url = './test.json';
-
-    return fetch(url)
-        .then(response => {
-            if(response.ok) {
-                return response.json()
-            }
+    return fetch("http://localhost:5678/api/works")
+        .then((response) => response.json())
+        .then(works => {
+            let worksData = works
+            return works
         })
-        .then(response => {
-            return response
-        })
-        .catch(err => console.log("une erreur s'est produite", err));
 }
+
 async function getFilters() {
-    const url = './filtres.json';
-
-    return fetch(url)
-        .then(response => {
-            if(response.ok) {
-                return response.json()
-            }
+    return fetch("http://localhost:5678/api/categories")
+        .then((response) => response.json())
+        .then(categories => {
+           let categoriesData = categories
+            return categories
         })
-        .then(response => {
-            return response
-        })
-        .catch(err => console.log("une erreur s'est produite", err));
 }
+
 
 // Boucle buttons + eventListener sur filtres
 
 async function init() {
     const projects = await getProjects();
+    
 
   for (let i = 0; i < projects.length; i++) {
 
@@ -155,18 +146,91 @@ async function handleClickFilter(event){
 
 }
 
-// Partie Modales
-/* 
-const openModale = function (e){
-    e.preventDefault()
-    const target = document.querySelector(e.target.getAttribute('href'))
-    target.style.display = null
-    target.removeAttribute('aria-hidden')
-    
-}
+// Partie Modals
+
+const modal = document.querySelector("#modale1")
 const buttonModifier = document.querySelector(".modifier")
-buttonModifier.addEventListener('click',openModale)
+
+buttonModifier.addEventListener('click', openModal)
+
+function openModal(){
+    modal.classList.remove("hidden")
+    stepOne()
+}
 
 
-sophie.bluel@test.tld
-*/
+async function stepOne(){
+    const modalWrapper = document.querySelector(".modale_wrapper")
+    modalWrapper.innerHTML =
+   `<button class="x"> <i class="fa-solid fa-x"></i> </button>
+    <div id="modale_title"> Galerie photo </div>
+    <div class="all_pictures">  </div>
+    <div class="buttons">
+      <button class="add_picture"> Ajouter une photo  </button>
+      <button class="delete_all">  Supprimer galerie </button>
+    </div>`
+
+  const projects = await getProjects()
+  const allPictures = document.querySelector(".all_pictures")
+
+   for (let i = 0; i < projects.length; i++) {
+
+        const imageElement = document.createElement("img")
+        imageElement.src = projects[i].imageUrl
+        allPictures.appendChild(imageElement)
+     }
+
+  const addPictures = document.querySelector(".add_picture")
+  addPictures.addEventListener('click', stepTwo)
+
+}
+
+function stepTwo(){
+    const modalWrapper = document.querySelector(".modale_wrapper")
+    modalWrapper.innerHTML =
+    `<button class="x"> <i class="fa-solid fa-x"></i> </button>
+    <div id="modale_title"> Ajout photo </div>
+    <div class="add_picture_wrap"> 
+        <div class="add_picture_space">
+            <button class="ajouter_photo"> + Ajouter photo </button>
+        </div>
+     </div>
+    <div class="input">
+    <div class="project_title">
+        <p> Titre </p>
+        <input class="project_title_input">
+    </div>
+    <div class="project_category">
+        <p> Catégorie </p>
+        <input class="project_category_input">
+    </div>
+    </div>
+    <div class="buttons">
+      <button class="validation"> Valider </button>
+    </div>`
+}
+   
+
+
+// Supression des travaux existants 
+
+async function deleteWorks() {
+    return fetch("http://localhost:5678/api/works/")
+        .then((response) => response.json())
+        .then(works => {
+            let worksData = works
+            return works
+        })
+}
+
+async function deleteWorks(imageId) {
+    return fetch("http://localhost:5678/api/works/", {
+        method: 'DELETE',
+        headers: {
+            "Content-type": "application/json"
+        },
+        
+    })
+}
+
+
