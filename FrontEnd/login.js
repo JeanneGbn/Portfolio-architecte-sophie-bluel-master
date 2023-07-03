@@ -26,6 +26,10 @@ let stockPassword = password.value
 
 // Event connection 
 
+const errorConnection = document.querySelector(".error_connection")
+errorConnection.innerHTML =
+`Email ou Mot De Passe incorrect`
+
 login.addEventListener('click', (e) => {
     e.preventDefault()
     stockEmail = email.value
@@ -40,7 +44,8 @@ login.addEventListener('click', (e) => {
                 window.location.href = "./index.html"
                 console.log("connect")
             } else {
-                console.error("email ou MDP incorrect")
+                console.error("Erreur dans l’identifiant ou le mot de passe")
+                errorConnection.classList.remove("hidden")
                 
             }
         })
@@ -57,4 +62,6 @@ email.addEventListener('input', (e) => {
 password.addEventListener('input', (e) => {
     console.log(e.target.value)
 })
+
+
 

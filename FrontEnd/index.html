@@ -19,15 +19,13 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./login.html">login</a></li>
+			<li><a class="login_button" href="./login.html">login</a></li>
+			<li><a class="logout_button hidden">Logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <aside id="modale1" class="modal hidden" >
-	<div class="modale_wrapper"> </div>
-</aside>
-<aside id="modale2" class="modal" style="display: none;">
 	<div class="modale_wrapper"> </div>
 </aside>
 <main>
@@ -45,9 +43,9 @@
 	<section id="portfolio">
 		<div class="mes-projets"> 
 		<h2>Mes Projets</h2> 
-		<a href="#modale1" class="modifier"> modifier <i class="fa-regular fa-pen-to-square"></i> </a>
+		<a href="#modale1" class="modifier hidden"> modifier <i class="fa-regular fa-pen-to-square"></i> </a>
 		</div>
-		<div class="filters" style="display: none;"> <button class="all"> Tous </button> </div>
+		<div class="filters"> <button class="all"> Tous </button> </div>
 		<div class="gallery"></div>
 	</section>
 	<section id="contact">
