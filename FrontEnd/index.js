@@ -38,24 +38,39 @@ async function fetchDelete(imageId) {
     }
 }
 
+
+async function postWorks(formData) {
+    return fetch("http://localhost:5678/api/works", {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData,
+    })
+    
+
+}
+
+
+
 // LOGOUT
 
 
 const logoutButton = document.querySelector('.logout_button')
 logoutButton.addEventListener('click', logout)
-  function logout(){
-      if(token){
+
+function logout(){
+   if(token){
           localStorage.removeItem('token')
           location.reload()
       } else{
           console.log("error")
       }
-  }
+    }
 
   
 
-// Boucle buttons + eventListener sur filtres
-
+// Affichage projets
 
 
 async function initProjects() {
@@ -77,6 +92,8 @@ async function initProjects() {
         }
 }
 
+
+// Filtres et tri des projets 
 
 async function initFilters() {
 
@@ -138,8 +155,6 @@ async function handleClickFilter(event){
        
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
-
-            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -159,8 +174,6 @@ async function handleClickFilter(event){
 
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
-
-            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -179,8 +192,6 @@ async function handleClickFilter(event){
 
         for (let a = 0; a < projectsFiltersArray.length; a++) {
        
-
-            
             const baliseFigure = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = projectsFiltersArray[a].imageUrl
@@ -210,15 +221,12 @@ async function handleClickFilter(event){
 
 }
 
-// Partie Modals
+// Céations des modals
 
 const modal = document.querySelector("#modale1")
 const buttonModifier = document.querySelector(".modifier")
 
 buttonModifier.addEventListener('click', openModal)
-
-
-
 function openModal(){
     modal.classList.remove('hidden')
     stepOne()
@@ -258,18 +266,16 @@ async function stepOne(){
      }
 
      
-     deletePicture()
+  deletePicture()
 
   const addPictures = document.querySelector(".add_picture")
   addPictures.addEventListener('click', stepTwo)
 
 
-    const modal = document.querySelector(".modal")
-    const buttonClose = document.querySelector(".close")
-    buttonClose.addEventListener('click', closeModal)
-    
-
-    function closeModal(){
+  const modal = document.querySelector(".modal")
+  const buttonClose = document.querySelector(".close")
+  buttonClose.addEventListener('click', closeModal)
+  function closeModal(){
     modal.classList.add('hidden')
     }
 
@@ -280,6 +286,8 @@ async function stepOne(){
       })
 
 }
+
+// Fonction permettant la suppression des projets
 
 function deletePicture() {
     const allPictures = document.querySelector(".all_pictures")
@@ -349,8 +357,8 @@ async function stepTwo(){
     const buttonClose = document.querySelector(".close")
     buttonClose.addEventListener('click', closeModal)
     function closeModal(){
-    modal.classList.add('hidden')
-}
+      modal.classList.add('hidden')
+    }
 
    addEventListener('click', (e) => {
        if (e.target === modal) {
@@ -358,6 +366,8 @@ async function stepTwo(){
        }
      })
 
+
+ // Récupération des données pour formulaire envoie nouveaux projets
 
     const title = document.querySelector('.project_title_input')
     const picture = document.querySelector('.ajouter_photo')
@@ -374,11 +384,13 @@ async function stepTwo(){
     picture.addEventListener('change', (e) => {
 
      const [file] = picture.files
+     const buttonAjouterPhoto = document.querySelector('.button_ajouter_photo')
 
      if (file) {
        img.classList.remove('hidden')
        img.src = URL.createObjectURL(file)
        validationButton.classList.add('green')
+       buttonAjouterPhoto.classList.add('hidden')
      } 
     })
 
@@ -422,17 +434,6 @@ async function stepTwo(){
 }
 
 
- async function postWorks(formData) {
-    return fetch("http://localhost:5678/api/works", {
-        method: 'POST',
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
-        body: formData,
-    })
-    
-
-}
 
 
 
