@@ -45,17 +45,20 @@ const logoutButton = document.querySelector('.logout_button')
 logoutButton.addEventListener('click', logout)
   function logout(){
       if(token){
-          localStorage.removeItem(token)
+          localStorage.removeItem('token')
+          location.reload()
       } else{
           console.log("error")
       }
   }
 
+  
+
 // Boucle buttons + eventListener sur filtres
 
 
 
-async function init() {
+async function initProjects() {
     const projects = await getProjects();
     
 
@@ -72,12 +75,15 @@ async function init() {
         baliseFigure.appendChild(imageElement)
         baliseFigure.appendChild(figCaption)
         }
-        
-    
-     const filters = await getFilters()
-     const sectionFilter = document.querySelector('.filters')
+}
 
-     for (let i = 0; i < filters.length; i++) {
+
+async function initFilters() {
+
+       const filters = await getFilters()
+       const sectionFilter = document.querySelector('.filters')
+
+   for (let i = 0; i < filters.length; i++) {
          
         const filterChoice = document.createElement("button")
         filterChoice.innerText = filters[i].name
@@ -91,11 +97,19 @@ async function init() {
     const modifier = document.querySelector('.modifier')
     const logoutButton = document.querySelector('.logout_button')
     const loginButton = document.querySelector('.login_button')
+    const topHead = document.querySelector('.top_head')
+
     if(token){
         sectionFilter.classList.add('hidden')
         modifier.classList.remove('hidden')
         loginButton.classList.add('hidden')
         logoutButton.classList.remove('hidden')
+        const blackHeadBand = document.createElement("div")
+        blackHeadBand.classList.add('js_black_band')
+        topHead.appendChild(blackHeadBand)
+        blackHeadBand.innerHTML =
+        `<p> <i class="fa-regular fa-pen-to-square"></i> Mode édition </p>
+         <button> publier les changements </button> `
     } else{
         sectionFilter.classList.remove('hidden')
         modifier.classList.add('hidden')
@@ -106,7 +120,8 @@ async function init() {
 
 }
 
-init();
+initProjects()
+initFilters()
 
 async function handleClickFilter(event){
     
@@ -202,6 +217,8 @@ const buttonModifier = document.querySelector(".modifier")
 
 buttonModifier.addEventListener('click', openModal)
 
+
+
 function openModal(){
     modal.classList.remove('hidden')
     stepOne()
@@ -221,6 +238,7 @@ async function stepOne(){
 
   const projects = await getProjects()
   const allPictures = document.querySelector(".all_pictures")
+
   
 
    for (let i = 0; i < projects.length; i++) {
@@ -249,11 +267,17 @@ async function stepOne(){
     const modal = document.querySelector(".modal")
     const buttonClose = document.querySelector(".close")
     buttonClose.addEventListener('click', closeModal)
+    
+
     function closeModal(){
     modal.classList.add('hidden')
-}
+    }
 
-
+    addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      })
 
 }
 
@@ -261,24 +285,24 @@ function deletePicture() {
     const allPictures = document.querySelector(".all_pictures")
     allPictures.addEventListener("click", (event) => {
         if (event.target.classList.contains("fa-trash-can")) {
-            event.preventDefault()
             const selectedPicture = event.target.parentNode.querySelector("img")
             if (selectedPicture) {
                 const imageId = selectedPicture.getAttribute('data-id-img')
                 console.log("Image ID:", imageId)
                 fetchDelete(imageId).then(() => {
                     selectedPicture.parentNode.remove()
-                  //  document.querySelector(`img[data-id-img=${imageId}]`).parentNode.remove()
-                    debugger
+                    const gallery = document.querySelector('.gallery')
+                    gallery.innerHTML = ""
+                    initProjects()
                 })
             }
         }
     })
 
 }
- 
 
-function stepTwo(){
+
+async function stepTwo(){
     const modalWrapper = document.querySelector(".modale_wrapper")
     modalWrapper.innerHTML =
     `<button class="previous"> <i class="fa-solid fa-arrow-left"></i> </button>
@@ -288,8 +312,9 @@ function stepTwo(){
         <div class="add_picture_space">
           <div class="add_picture_box">
             <i class="fa-regular fa-image previous__icone" ></i>
-            <label for="file" class="button_ajouter_photo"> Ajouter photo</label>
+            <button class="button_ajouter_photo"> Ajouter photo</button>
             <input class="ajouter_photo" type="file" accept="image/jpeg,image/png">
+            <img src="#" class="preview_img">
             <p> jpg, png : 4mo max</p>
           </div>
         </div>
@@ -300,7 +325,7 @@ function stepTwo(){
           </div>
           <div class="project_category">
              <p> Catégorie </p>
-             <input class="project_category_input" type="drop-down menus">
+             <select class="project_category_input"> </select>
           </div>
         </div>
         <div class="validation_ajout">
@@ -311,6 +336,14 @@ function stepTwo(){
     const backStepOne = document.querySelector(".previous")
     backStepOne.addEventListener('click', stepOne)
 
+    const categories = await getFilters()
+    const categoryInput = document.querySelector('.project_category_input')
+    categories.forEach(category => {
+        const option = document.createElement('option')
+        option.value = category.id
+        option.text = category.name
+        categoryInput.append(option)
+    });
 
     const modal = document.querySelector(".modal")
     const buttonClose = document.querySelector(".close")
@@ -319,21 +352,43 @@ function stepTwo(){
     modal.classList.add('hidden')
 }
 
+   addEventListener('click', (e) => {
+       if (e.target === modal) {
+         closeModal();
+       }
+     })
+
 
     const title = document.querySelector('.project_title_input')
-    const category = document.querySelector('.project_category_input')
     const picture = document.querySelector('.ajouter_photo')
     const form = document.querySelector('#add_picture_form')
     let workTitle = title.value
     let pictureLink = picture.files[0]
-    let workCategory = category.value
+    let workCategory = categoryInput.value
+
+    const img = document.querySelector('.preview_img')
+    img.classList.add('hidden')
+    const validationButton = document.querySelector('.validation_button')
+
+    
+    picture.addEventListener('change', (e) => {
+
+     const [file] = picture.files
+
+     if (file) {
+       img.classList.remove('hidden')
+       img.src = URL.createObjectURL(file)
+       validationButton.classList.add('green')
+     } 
+    })
+
 
 
   form.addEventListener('submit', (e) => {
-      e.preventDefault()
+      
       workTitle = title.value
       pictureLink = picture.files[0]
-      workCategory = category.value
+      workCategory = categoryInput.value
       const formData = new FormData()
       formData.append('title', workTitle)
       formData.append('image', pictureLink)
@@ -345,17 +400,25 @@ function stepTwo(){
 
 
       postWorks(formData)
-          .then((response) => response.json())
+          .then((response) => {
+            if(response.ok){
+               return response.json()
+            } else{
+                alert("Erreur: le formulaire n'est pas correctement rempli")
+            }
+          })
           .then(valider => {
               if (valider) {
-                  console.log("ok")
-              } else {
-                  console.error("Error")
-                
-              }
-          })
-        
+                  console.log("Projet ajouté avec succès")
+                  const gallery = document.querySelector('.gallery')
+                  gallery.innerHTML = ""
+                  initProjects()
+                  closeModal()
+              } 
+          }) 
     })
+
+    
 }
 
 
@@ -367,6 +430,8 @@ function stepTwo(){
         },
         body: formData,
     })
+    
+
 }
 
 
